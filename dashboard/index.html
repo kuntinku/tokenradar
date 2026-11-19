@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Token Radar — pre-token protocol board</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="mark" aria-hidden="true"></span>
+    <div>
+      <h1>Token Radar</h1>
+      <p class="sub">What a protocol's token would be worth if its record held — and how to farm it first.</p>
+    </div>
+  </div>
+  <dl class="stats" id="stats"></dl>
+</header>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="panel">
+      <h2>Filter</h2>
+      <label class="field">
+        <span>Search</span>
+        <input id="q" type="search" placeholder="protocol, chain, category" autocomplete="off">
+      </label>
+      <label class="field">
+        <span>Category</span>
+        <select id="category"></select>
+      </label>
+      <label class="field">
+        <span>Chain</span>
+        <select id="chain"></select>
+      </label>
+      <label class="field">
+        <span>Sort by</span>
+        <select id="sort">
+          <option value="implied">Implied value</option>
+          <option value="multiple">Multiple (FDV / TVL)</option>
+          <option value="tvl">TVL</option>
+          <option value="growth">7-day growth</option>
+          <option value="age">Days without a token</option>
+        </select>
+      </label>
+      <label class="toggle">
+        <input id="onlyWatch" type="checkbox">
+        <span>Watchlist only (no token recorded, above the floor)</span>
+      </label>
+      <button id="reset" class="ghost" type="button">Clear filters</button>
+    </div>
+
+    <div class="panel">
+      <h2>Set aside</h2>
+      <p class="note" id="liveNote"></p>
+      <button id="showLive" class="ghost" type="button">Show protocols whose token trades</button>
+    </div>
+    <div class="panel">
+      <h2>Model</h2>
+      <p class="note">Every pre-token protocol is scored by the same five factors. No name is special-cased.</p>
+      <ol class="formula">
+        <li><b>peer multiple</b> median market cap / TVL of same-category protocols whose token trades</li>
+        <li><b>size curve</b> 0.9 × (TVL / $100M)<sup>−0.18</sup>, held to 0.25–2.2</li>
+        <li><b>sector</b> 0.55 × peer + 0.45 × size curve</li>
+        <li><b>momentum</b> 1 + 0.0035 × 7-day growth, clamped ±50 / +100%</li>
+        <li><b>tenure</b> 0.55 + 0.45 × min(age, 4y) / 4y</li>
+      </ol>
+      <p class="eq">implied value = TVL × sector × momentum × tenure</p>
+    </div>
+
+  </aside>
+
+  <main id="main" class="main"></main>
+</div>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
