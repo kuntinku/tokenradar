@@ -81,4 +81,4 @@ process.stdout.write(
     `board ${board.length} rows, live peers ${radar.live.length}\n` +
     `token radar: wrote ${join(out, 'board.json')}, data.js, dashboard/ (${dash.length} files), screenshots/ (${shots.length}) and dossier.json (${dossier.length} bytes)\n`,
 );
-console.log('[radar-m2] board, dossier and dashboard written to '+outDir);
+console.log('[radar-m2] board, dossier and dashboard written to '+out);
